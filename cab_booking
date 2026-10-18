@@ -1,0 +1,82 @@
+import random
+
+# Predefined values
+CABS = {
+    "1": ("Auto", 12),
+    "2": ("Sedan", 18),
+    "3": ("SUV", 25),
+}
+
+ROUTES = {
+    "1": ("Pune Station", "Shivajinagar", 5),
+    "2": ("Swargate", "Kothrud", 8),
+    "3": ("Hinjawadi", "Wakad", 10),
+}
+
+print("=== Welcome to Cab Booking Chatbot ===")
+
+while True:
+    print("\n--- Main Menu ---")
+    print("1. Book Ride")
+    print("2. Exit")
+    choice = input("Enter your choice: ").strip()
+
+    if choice == "1":
+        # Step 2: choose cab type
+        print("\nChoose Cab Type:")
+        print("1. Auto  (Rs.12/km)")
+        print("2. Sedan (Rs.18/km)")
+        print("3. SUV   (Rs.25/km)")
+        cab_choice = input("Enter cab choice: ").strip()
+
+        if cab_choice not in CABS:
+            print("Invalid cab choice! Please try again.")
+            continue
+
+        cab_name, rate = CABS[cab_choice]
+
+        # Step 3: choose route
+        print("\nChoose Route:")
+        for no, (src, dest, km) in ROUTES.items():
+            print(f"{no}. {src} to {dest} ({km} km)")
+        route_choice = input("Enter route number: ").strip()
+
+        if route_choice not in ROUTES:
+            print("Invalid route choice! Please try again.")
+            continue
+
+        source, destination, distance = ROUTES[route_choice]
+
+        # Step 4: calculate fare
+        fare = rate * distance
+        print("\n--- Ride Details ---")
+        print("Cab Type    :", cab_name)
+        print("Source      :", source)
+        print("Destination :", destination)
+        print("Distance    :", distance, "km")
+        print("Rate        : Rs.", rate, "per km")
+        print("Total Fare  : Rs.", fare)
+
+        # Step 5: confirm or cancel (before OTP)
+        print("\n1. Confirm & Share OTP")
+        print("2. Cancel Ride")
+        confirm = input("Enter your choice: ").strip()
+
+        if confirm == "1":
+            # Step 6: OTP shared, ride locked
+            otp = random.randint(1000, 9999)
+            print("\nYour OTP is:", otp, "(shared with you)")
+            print("NOTE: Ride cannot be cancelled after OTP is shared.")
+            print("Booking Confirmed! Your", cab_name, "is on the way.")
+        elif confirm == "2":
+            print("\nRide cancelled. No OTP was shared.")
+        else:
+            print("Invalid choice! Ride not booked. Returning to main menu.")
+
+    elif choice == "2":
+        # Step 7: exit
+        print("\nThank you for using Cab Booking Chatbot. Goodbye!")
+        break
+
+    else:
+        print("Invalid choice! Please enter 1 or 2.")
